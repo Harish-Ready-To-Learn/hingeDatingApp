@@ -16,6 +16,10 @@ import {useNavigation} from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
 import GeoLocation from '@react-native-community/geolocation';
 import GetLocation from 'react-native-get-location';
+import {
+  isLocationEnabled,
+  promptForEnableLocationIfNeeded,
+} from 'react-native-android-location-enabler';
 
 const LocationScreen = () => {
   const navigation = useNavigation();
@@ -80,6 +84,31 @@ const LocationScreen = () => {
   };
 
   const reqPermission = async () => {
+    if (Platform.OS === 'android') {
+      const checkEnabled = await isLocationEnabled();
+      console.log('checkEnabled', checkEnabled);
+      if (!checkEnabled) {
+        try {
+          const enableResult = await promptForEnableLocationIfNeeded();
+          console.log('enableResult', enableResult);
+          // The user has accepted to enable the location services
+          // data can be :
+          //  - "already-enabled" if the location services has been already enabled
+          //  - "enabled" if user has clicked on OK button in the popup
+        } catch (error) {
+          if (error instanceof Error) {
+            console.error(error.message);
+            // The user has not accepted to enable the location services or something went wrong during the process
+            // "err" : { "code" : "ERR00|ERR01|ERR02|ERR03", "message" : "message"}
+            // codes :
+            //  - ERR00 : The user has clicked on Cancel button in the popup
+            //  - ERR01 : If the Settings change are unavailable
+            //  - ERR02 : If the popup has failed to open
+            //  - ERR03 : Internal error
+          }
+        }
+      }
+    }
     let accessLocationPermission = await requestLocationPermission();
     let coarseLocationPermission = await requestLocationPermission2();
     console.log('PERMISSIONS,', accessLocationPermission);

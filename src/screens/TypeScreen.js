@@ -36,7 +36,11 @@ const TypeScreen = () => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <AntDesign name="lock1" size={26} color="black" />
+            <MaterialCommunityIcons
+              name="cake-variant-outline"
+              size={26}
+              color="black"
+            />
           </View>
           <Image
             style={{width: 100, height: 40}}

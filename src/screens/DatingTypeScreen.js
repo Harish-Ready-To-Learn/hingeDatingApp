@@ -17,11 +17,20 @@ import {useNavigation} from '@react-navigation/native';
 const DatingTypeScreen = () => {
   const navigation = useNavigation();
 
-  const [type, setType] = useState('');
   const [datingPreferences, setDatingPreferences] = useState([]);
 
+  const chooseOption = option => {
+    if (datingPreferences.includes(option)) {
+      setDatingPreferences(
+        datingPreferences.filter(selectionOption => selectionOption != option),
+      );
+    } else {
+      setDatingPreferences([...datingPreferences, option]);
+    }
+  };
+
   const handleNext = () => {
-    navigation.navigate('DatingTypeScreen');
+    navigation.navigate('LookingForScreen');
   };
 
   return (
@@ -37,7 +46,7 @@ const DatingTypeScreen = () => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <AntDesign name="lock1" size={26} color="black" />
+            <AntDesign name="hearto" size={26} color="black" />
           </View>
           <Image
             style={{width: 100, height: 40}}
@@ -48,11 +57,10 @@ const DatingTypeScreen = () => {
         </View>
         <View style={{marginTop: 15}}>
           <Text style={{fontSize: 25, fontWeight: 'bold', color: 'black'}}>
-            What's your sexuality?
+            Who do you want to date?
           </Text>
           <Text style={{fontSize: 15, color: 'gray', marginTop: 20}}>
-            Hinge users are matched based on these three gender groups. You can
-            add more gender after.
+            Select all the people you are open to meeting?
           </Text>
           <View style={{marginTop: 20}}>
             <View
@@ -62,13 +70,15 @@ const DatingTypeScreen = () => {
                 justifyContent: 'space-between',
               }}>
               <Text style={{fontSize: 15, color: 'black', fontWeight: '500'}}>
-                Straight
+                Men
               </Text>
-              <Pressable onPress={() => setType('Straight')}>
+              <Pressable onPress={() => chooseOption('Men')}>
                 <FontAwesome
                   name="circle"
                   size={26}
-                  color={type == 'Straight' ? '#581845' : 'lightgray'}
+                  color={
+                    datingPreferences.includes('Men') ? '#581845' : 'lightgray'
+                  }
                 />
               </Pressable>
             </View>
@@ -80,13 +90,17 @@ const DatingTypeScreen = () => {
                 marginVertical: 12,
               }}>
               <Text style={{fontSize: 15, color: 'black', fontWeight: '500'}}>
-                Lesbian
+                Women
               </Text>
-              <Pressable onPress={() => setType('Lesbian')}>
+              <Pressable onPress={() => chooseOption('Women')}>
                 <FontAwesome
                   name="circle"
                   size={26}
-                  color={type == 'Lesbian' ? '#581845' : 'lightgray'}
+                  color={
+                    datingPreferences.includes('Women')
+                      ? '#581845'
+                      : 'lightgray'
+                  }
                 />
               </Pressable>
             </View>
@@ -97,13 +111,17 @@ const DatingTypeScreen = () => {
                 justifyContent: 'space-between',
               }}>
               <Text style={{fontSize: 15, color: 'black', fontWeight: '500'}}>
-                Bisexual
+                Everyone
               </Text>
-              <Pressable onPress={() => setType('Bisexual')}>
+              <Pressable onPress={() => chooseOption('Everyone')}>
                 <FontAwesome
                   name="circle"
                   size={26}
-                  color={type == 'Bisexual' ? '#581845' : 'lightgray'}
+                  color={
+                    datingPreferences.includes('Everyone')
+                      ? '#581845'
+                      : 'lightgray'
+                  }
                 />
               </Pressable>
             </View>
