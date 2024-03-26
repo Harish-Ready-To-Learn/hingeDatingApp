@@ -1,13 +1,12 @@
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Fontisto';
+import BottomNavigation from './src/navigation/BottomNavigation';
+import StackNavigator from './src/navigation/StackNavigator';
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <Text>App</Text>
-      <Icon name="email" size={26} color="#900" />
-    </SafeAreaView>
+    <StackNavigator />
   )
 }
 
