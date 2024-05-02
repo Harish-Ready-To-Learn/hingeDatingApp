@@ -3,10 +3,19 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/Fontisto';
 import BottomNavigation from './src/navigation/BottomNavigation';
 import StackNavigator from './src/navigation/StackNavigator';
+import { ModalPortal } from 'react-native-modals';
+import { AuthProvider } from './src/AuthContext';
 
 const App = () => {
   return (
-    <StackNavigator />
+    <>
+      <AuthProvider>
+        <>
+          <StackNavigator />
+          <ModalPortal />
+        </>
+    </AuthProvider>
+    </>
   )
 }
 
