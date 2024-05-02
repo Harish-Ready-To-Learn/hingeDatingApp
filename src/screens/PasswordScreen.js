@@ -11,6 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import {saveRegistrationData} from '../utils/registrationUtils';
 
 const PasswordScreen = () => {
   const navigation = useNavigation();
@@ -18,6 +19,9 @@ const PasswordScreen = () => {
   const [password, setPassword] = useState('');
 
   const handleNext = () => {
+    if (password.trim() !== '') {
+      saveRegistrationData('Password', {password});
+    }
     navigation.navigate('DobScreen');
   };
 

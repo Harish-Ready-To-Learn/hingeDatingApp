@@ -18,11 +18,24 @@ import PhotoScreen from '../screens/PhotoScreen';
 import PromtScreen from '../screens/PromtScreen';
 import ShowPromptScreen from '../screens/ShowPromptScreen';
 import PreFinalScreen from '../screens/PreFinalScreen';
+import PromptScreen from '../screens/PromtScreen';
+import AskForDateScreen from '../screens/AskForDateScreen';
+import AskForDateNextScreen from '../screens/AskForDateNextScreen';
 
 const AuthStack = () => {
   const AuthStack = createNativeStackNavigator();
   return (
     <AuthStack.Navigator>
+      {/* <AuthStack.Screen
+        name="AskForDateScreen"
+        component={AskForDateScreen}
+        options={{headerShown: false}}
+      />
+      <AuthStack.Screen
+        name="AskForDateNextScreen"
+        component={AskForDateNextScreen}
+        options={{headerShown: false}}
+      /> */}
       <AuthStack.Screen
         name="BasicInfoScreen"
         component={BasicInfoScreen}
@@ -84,8 +97,8 @@ const AuthStack = () => {
         options={{headerShown: false}}
       />
       <AuthStack.Screen
-        name="PromtScreen"
-        component={PromtScreen}
+        name="PromptScreen"
+        component={PromptScreen}
         options={{headerShown: false}}
       />
       <AuthStack.Screen

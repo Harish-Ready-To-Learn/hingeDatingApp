@@ -6,10 +6,14 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const NameScreen = () => {
   const navigation = useNavigation();
@@ -17,7 +21,18 @@ const NameScreen = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
+  useEffect(() => {
+    getRegistrationData('name').then(data => {
+      if (data) {
+        setFirstName(data.firstName ? data.firstName : '');
+      }
+    });
+  }, []);
+
   const handleNext = () => {
+    if (firstName.trim() !== '') {
+      saveRegistrationData('name', {firstName});
+    }
     navigation.navigate('EmailScreen');
   };
 

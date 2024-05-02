@@ -6,11 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const DobScreen = () => {
   const navigation = useNavigation();
@@ -38,7 +42,22 @@ const DobScreen = () => {
     setYear(text);
   };
 
+  useEffect(() => {
+    getRegistrationData('Dob').then(data => {
+      if (data) {
+        setDay(data.split('/')[0]);
+        setMonth(data.split('/')[1]);
+        setYear(data.split('/')[2]);
+      }
+    });
+  }, []);
+
   const handleNext = () => {
+    if (day.trim() !== '' && month.trim() !== '' && year.trim() !== '') {
+      const dateOfBirth = `${day}/${month}/${year}`;
+      console.log(dateOfBirth);
+      saveRegistrationData('Dob', dateOfBirth);
+    }
     navigation.navigate('LocationScreen');
   };
 

@@ -1,10 +1,11 @@
 import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 
 const BasicInfoScreen = () => {
   const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.headerTextView}>

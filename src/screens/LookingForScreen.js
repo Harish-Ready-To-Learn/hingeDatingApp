@@ -7,19 +7,34 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const LookingForScreen = () => {
   const navigation = useNavigation();
 
   const [lookingFor, setLookingFor] = useState('');
 
+  useEffect(() => {
+    getRegistrationData('LookingFor').then(data => {
+      if (data) {
+        setLookingFor(data);
+      }
+    });
+  }, []);
+
   const handleNext = () => {
+    if (lookingFor.trim() !== '') {
+      saveRegistrationData('LookingFor', lookingFor);
+    }
     navigation.navigate('HomeTownScreen');
   };
 

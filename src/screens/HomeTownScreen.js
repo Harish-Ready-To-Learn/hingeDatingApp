@@ -7,19 +7,34 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const HomeTownScreen = () => {
   const navigation = useNavigation();
 
   const [homeTown, setHomeTown] = useState('');
 
+  useEffect(() => {
+    getRegistrationData('HomeTown').then(data => {
+      if (data) {
+        setHomeTown(data);
+      }
+    });
+  }, []);
+
   const handleNext = () => {
+    if (homeTown.trim() !== '') {
+      saveRegistrationData('HomeTown', homeTown);
+    }
     navigation.navigate('PhotoScreen');
   };
 

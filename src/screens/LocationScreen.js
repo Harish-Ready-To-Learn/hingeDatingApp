@@ -20,6 +20,7 @@ import {
   isLocationEnabled,
   promptForEnableLocationIfNeeded,
 } from 'react-native-android-location-enabler';
+import {saveRegistrationData} from '../utils/registrationUtils';
 
 const LocationScreen = () => {
   const navigation = useNavigation();
@@ -173,6 +174,7 @@ const LocationScreen = () => {
   };
 
   const handleNext = () => {
+    saveRegistrationData('Location', location);
     navigation.navigate('GenderScreen');
   };
 

@@ -6,18 +6,34 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const EmailScreen = () => {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
 
+  useEffect(() => {
+    getRegistrationData('Email').then(data => {
+      if (data) {
+        console.log(data);
+        setEmail(data.email ? data.email : '');
+      }
+    });
+  }, []);
+
   const handleNext = () => {
+    if (email.trim() !== '') {
+      saveRegistrationData('Email', {email});
+    }
     navigation.navigate('PasswordScreen');
   };
 

@@ -7,17 +7,29 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const DatingTypeScreen = () => {
   const navigation = useNavigation();
 
   const [datingPreferences, setDatingPreferences] = useState([]);
+
+  useEffect(() => {
+    getRegistrationData('Dating').then(data => {
+      if (data) {
+        setDatingPreferences(data);
+      }
+    });
+  }, []);
 
   const chooseOption = option => {
     if (datingPreferences.includes(option)) {
@@ -30,6 +42,9 @@ const DatingTypeScreen = () => {
   };
 
   const handleNext = () => {
+    if (datingPreferences.length > 0) {
+      saveRegistrationData('Dating', datingPreferences);
+    }
     navigation.navigate('LookingForScreen');
   };
 

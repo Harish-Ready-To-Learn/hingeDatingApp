@@ -8,7 +8,7 @@ import {
   Pressable,
   Button,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,12 +16,24 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const PhotoScreen = () => {
   const navigation = useNavigation();
 
   const [imageUrls, setImageUrls] = useState(['', '', '', '', '', '']);
   const [imageUrlText, setImageUrlText] = useState('');
+
+  useEffect(() => {
+    getRegistrationData('Photos').then(data => {
+      if (data) {
+        setImageUrls(data);
+      }
+    });
+  }, []);
 
   const handleAddImage = () => {
     // Find the first empty slot in  the "imageUrls" array
@@ -36,7 +48,8 @@ const PhotoScreen = () => {
   };
 
   const handleNext = () => {
-    navigation.navigate('PhotoScreen');
+    saveRegistrationData('Photos', imageUrls);
+    navigation.navigate('PromptScreen');
   };
 
   return (
@@ -87,7 +100,12 @@ const PhotoScreen = () => {
                   }}>
                   {url ? (
                     <Image
-                      style={{height: '100%', width: '100%', borderRadius: 10}}
+                      style={{
+                        height: '50%',
+                        width: '50%',
+                        borderRadius: 10,
+                        resizeMode: 'cover',
+                      }}
                       source={{uri: url}}
                     />
                   ) : (
@@ -179,7 +197,7 @@ const PhotoScreen = () => {
           <TouchableOpacity
             onPress={handleNext}
             activeOpacity={0.8}
-            style={{marginTop: 30, marginLeft: 'auto'}}>
+            style={{marginLeft: 'auto'}}>
             <MaterialCommunityIcons
               style={{alignSelf: 'center', marginTop: 20}}
               name="arrow-right-circle"

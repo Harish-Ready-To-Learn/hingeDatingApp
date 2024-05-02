@@ -7,19 +7,34 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import {
+  getRegistrationData,
+  saveRegistrationData,
+} from '../utils/registrationUtils';
 
 const GenderScreen = () => {
   const navigation = useNavigation();
 
   const [gender, setGender] = useState('');
 
+  useEffect(() => {
+    getRegistrationData('Gender').then(data => {
+      if (data) {
+        setGender(data);
+      }
+    });
+  }, []);
+
   const handleNext = () => {
+    if (gender.trim() !== '') {
+      saveRegistrationData('Gender', gender);
+    }
     navigation.navigate('TypeScreen');
   };
 
