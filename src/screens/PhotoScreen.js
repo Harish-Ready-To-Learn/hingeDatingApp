@@ -30,7 +30,7 @@ const PhotoScreen = () => {
   useEffect(() => {
     getRegistrationData('Photos').then(data => {
       if (data) {
-        setImageUrls(data);
+        setImageUrls(data.imageUrls || '');
       }
     });
   }, []);
@@ -48,7 +48,7 @@ const PhotoScreen = () => {
   };
 
   const handleNext = () => {
-    saveRegistrationData('Photos', imageUrls);
+    saveRegistrationData('Photos', {imageUrls});
     navigation.navigate('PromptScreen');
   };
 

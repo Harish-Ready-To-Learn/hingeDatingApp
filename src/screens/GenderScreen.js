@@ -26,14 +26,14 @@ const GenderScreen = () => {
   useEffect(() => {
     getRegistrationData('Gender').then(data => {
       if (data) {
-        setGender(data);
+        setGender(data.gender || '');
       }
     });
   }, []);
 
   const handleNext = () => {
     if (gender.trim() !== '') {
-      saveRegistrationData('Gender', gender);
+      saveRegistrationData('Gender', {gender});
     }
     navigation.navigate('TypeScreen');
   };

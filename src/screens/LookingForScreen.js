@@ -26,14 +26,14 @@ const LookingForScreen = () => {
   useEffect(() => {
     getRegistrationData('LookingFor').then(data => {
       if (data) {
-        setLookingFor(data);
+        setLookingFor(data.lookingFor || '');
       }
     });
   }, []);
 
   const handleNext = () => {
     if (lookingFor.trim() !== '') {
-      saveRegistrationData('LookingFor', lookingFor);
+      saveRegistrationData('LookingFor', {lookingFor});
     }
     navigation.navigate('HomeTownScreen');
   };

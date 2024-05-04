@@ -26,14 +26,14 @@ const TypeScreen = () => {
   useEffect(() => {
     getRegistrationData('Type').then(data => {
       if (data) {
-        setType(data);
+        setType(data.type || '');
       }
     });
   }, []);
 
   const handleNext = () => {
     if (type.trim() !== '') {
-      saveRegistrationData('Type', type);
+      saveRegistrationData('Type', {type});
     }
     navigation.navigate('DatingTypeScreen');
   };

@@ -45,9 +45,9 @@ const DobScreen = () => {
   useEffect(() => {
     getRegistrationData('Dob').then(data => {
       if (data) {
-        setDay(data.split('/')[0]);
-        setMonth(data.split('/')[1]);
-        setYear(data.split('/')[2]);
+        setDay(data.dateOfBirth.split('/')[0] || '');
+        setMonth(data.dateOfBirth.split('/')[1] || '');
+        setYear(data.dateOfBirth.split('/')[2] || '');
       }
     });
   }, []);
@@ -56,7 +56,7 @@ const DobScreen = () => {
     if (day.trim() !== '' && month.trim() !== '' && year.trim() !== '') {
       const dateOfBirth = `${day}/${month}/${year}`;
       console.log(dateOfBirth);
-      saveRegistrationData('Dob', dateOfBirth);
+      saveRegistrationData('Dob', {dateOfBirth});
     }
     navigation.navigate('LocationScreen');
   };

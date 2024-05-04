@@ -26,14 +26,14 @@ const HomeTownScreen = () => {
   useEffect(() => {
     getRegistrationData('HomeTown').then(data => {
       if (data) {
-        setHomeTown(data);
+        setHomeTown(data.homeTown || '');
       }
     });
   }, []);
 
   const handleNext = () => {
     if (homeTown.trim() !== '') {
-      saveRegistrationData('HomeTown', homeTown);
+      saveRegistrationData('HomeTown', {homeTown});
     }
     navigation.navigate('PhotoScreen');
   };

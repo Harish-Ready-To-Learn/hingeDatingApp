@@ -174,7 +174,7 @@ const LocationScreen = () => {
   };
 
   const handleNext = () => {
-    saveRegistrationData('Location', location);
+    saveRegistrationData('Location', {location});
     navigation.navigate('GenderScreen');
   };
 

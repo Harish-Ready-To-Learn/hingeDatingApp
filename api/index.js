@@ -4,11 +4,15 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 
 const app = express();
-const port = 8000;
+const port = 8080;
 const cors = require('cors');
 
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "http://10.0.2.2:3000/",
+  },
+});
 
 app.use(cors());
 app.use(bodyparser.urlencoded({extended: false}));
@@ -27,13 +31,19 @@ mongoose
   });
 
 app.listen(port, () => {
-  console.log('Server is running in port 8000...');
+  console.log('Server is running in port ', port);
 });
 
 const User = require('./models/user');
 
+app.get('/', (req, res) => {
+  console.log('GHEre');
+  res.send('Hello World!');
+});
+
 // Backend Route to Create User and Generate Token
 app.post('/register', async (req, res) => {
+  console.log('Hello');
   try {
     // Extract user data from the request body
     const userData = req.body;

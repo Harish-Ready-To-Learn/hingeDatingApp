@@ -26,7 +26,7 @@ const DatingTypeScreen = () => {
   useEffect(() => {
     getRegistrationData('Dating').then(data => {
       if (data) {
-        setDatingPreferences(data);
+        setDatingPreferences(data.datingPreferences || '');
       }
     });
   }, []);
@@ -43,7 +43,7 @@ const DatingTypeScreen = () => {
 
   const handleNext = () => {
     if (datingPreferences.length > 0) {
-      saveRegistrationData('Dating', datingPreferences);
+      saveRegistrationData('Dating', {datingPreferences});
     }
     navigation.navigate('LookingForScreen');
   };
